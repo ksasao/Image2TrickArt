@@ -42,13 +42,13 @@ namespace Image2TrickArt
             var data = ContourTracking.Apply(bmp);
             var poly = Vectorize.Apply(data);
 
-            DebugDraw(data, poly);
+            // DebugDraw(data, poly);
 
             this.pictureBox1.Image = bmp;
 
             if (poly.Length == 4)
             {
-                CreateTrickArt(filename, poly);
+                CreateTrickArt(filename, poly, 2480, 3508);
             }
             else
             {
@@ -68,10 +68,10 @@ namespace Image2TrickArt
             b.Dispose();
         }
 
-        private void CreateTrickArt(string filename, Point[] poly)
+        private void CreateTrickArt(string filename, Point[] poly, int width, int height)
         {
-            int w = 2480;
-            int h = 3508;
+            int w = width;
+            int h = height;
 
             ProjectionConversion conv = null;
 
