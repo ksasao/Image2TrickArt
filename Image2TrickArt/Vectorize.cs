@@ -35,7 +35,7 @@ namespace Mpga.Imaging
             {
                 int p = (i + 3) % size;
                 int m = (i - 3 + size) % size;
-                if( table[p] < table[i] && table[m] < table[i] && table[i] > -0.7)
+                if( table[p] < table[i] && table[m] < table[i] && table[i] > -0.95)
                 {
                     result.Add(points[i]);
                 }
