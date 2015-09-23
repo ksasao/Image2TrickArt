@@ -42,7 +42,7 @@ namespace Image2TrickArt
             var data = ContourTracking.Apply(bmp);
             var poly = Vectorize.Apply(data);
 
-            //DebugDraw(data, poly);
+            DebugDraw(data, poly);
 
             this.pictureBox1.Image = bmp;
 
@@ -164,12 +164,14 @@ namespace Image2TrickArt
         {
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                g.DrawLines(Pens.Red, data);
-                for(int i=0; i<poly.Length; i++)
+                if(data.Length > 1)
+                {
+                    g.DrawLines(Pens.Red, data);
+                }
+                for (int i=0; i<poly.Length; i++)
                 {
                     g.DrawEllipse(Pens.Green, new Rectangle(poly[i].X-10, poly[i].Y-10, 20, 20));
                 }
-                g.DrawLines(Pens.Blue, poly);
             }
             bmp.Save("debug.png");
         }

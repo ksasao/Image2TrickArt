@@ -97,7 +97,7 @@ namespace Mpga.Imaging
             return points.ToArray();
         }
 
-        // 輪郭追跡のために外周を0埋め(B成分のみ)する
+        // 輪郭追跡のために外周を0埋めする
         // 0以外の部分を輪郭とみなす
         private static void ClearEdge(int w, int h, byte[] data)
         {
@@ -106,18 +106,22 @@ namespace Mpga.Imaging
             for (int i = 0; i < w * 4; i += 4)
             {
                 data[i] = data[i + under] = 0;
+                data[i+1] = data[i + under+1] = 0;
+                data[i+2] = data[i + under+2] = 0;
             }
             for (int i = 0; i < w * h; i += w * 4)
             {
                 data[i] = data[i + right] = 0;
+                data[i+1] = data[i + right+1] = 0;
+                data[i+2] = data[i + right+2] = 0;
             }
 
             // 2値化および追跡済みフラグをクリアする
+            // 透過色が設定されている部分は黒とみなす
             for (int i = 0; i < w * h * 4; i += 4)
             {
-                data[i] = (data[i] > 128) ? (byte)255 : (byte)0;
+                data[i] = (data[i] + data[i+1] + data[i+2] > 128 * 3 && data[i+3]  == 255) ? (byte)255 : (byte)0;
                 data[i+1] = 0;
-
             }
         }
 

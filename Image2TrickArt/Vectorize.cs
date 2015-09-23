@@ -20,7 +20,7 @@ namespace Mpga.Imaging
             int radius = 1 + size / 10;
             double[] table = new double[points.Length];
 
-            // ある点から少し離れた2点のなす角を求める
+            // ある点と少し離れた2点のなす角を求める
             for(int i=0; i< size; i++)
             {
                 int p = (i + radius) % size;
@@ -71,6 +71,13 @@ namespace Mpga.Imaging
             return grouped.ToArray();
         }
 
+        /// <summary>
+        /// ∠AOB の角度をベクトルの内積から求める
+        /// </summary>
+        /// <param name="a">点A</param>
+        /// <param name="o">点O</param>
+        /// <param name="b">点B</param>
+        /// <returns>-1 (±180°)～1(0°)</returns>
         private static double GetAngle(Point a, Point o, Point b)
         {
             int oaX = a.X - o.X;
@@ -78,11 +85,16 @@ namespace Mpga.Imaging
             int oaY = a.Y - o.Y;
             int obY = b.Y - o.Y;
 
-            // cosθを返す
+            // cosθ = →OA・→OB / (|→OA||→OB|)
             return (oaX * obX + oaY * obY) / Math.Sqrt(oaX * oaX + oaY * oaY) / Math.Sqrt(obX * obX + obY * obY);
-
         }
 
+        /// <summary>
+        /// 2点間の距離を求める
+        /// </summary>
+        /// <param name="p1">点1</param>
+        /// <param name="p2">点2</param>
+        /// <returns></returns>
         private static double GetDistance(Point p1, Point p2)
         {
             int x = p1.X - p2.X;
