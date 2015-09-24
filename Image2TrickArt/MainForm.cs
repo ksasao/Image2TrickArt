@@ -63,6 +63,7 @@ namespace Image2TrickArt
             bmp = new Bitmap(b.Width, b.Height);
             using (Graphics g = Graphics.FromImage(bmp))
             {
+                g.Clear(Color.Black);
                 g.DrawImageUnscaledAndClipped(b, new Rectangle(0, 0, b.Width, b.Height));
             }
             b.Dispose();
