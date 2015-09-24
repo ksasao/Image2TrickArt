@@ -92,13 +92,29 @@ namespace Image2TrickArt
                 {
                     int dest = (int)(x + (h - y - 1) * w) * 4;
                     PointF c = conv.Convert(x, y);
-                    int src = (int)(((int)c.X) + ((int)c.Y) * w2) * 4;
-                    if (0 <= src && src < original.Length)
+
+                    // バイリニア補間
+                    float dx = (float) (c.X - Math.Truncate(c.X));
+                    float dy = (float) (c.Y - Math.Truncate(c.Y));
+                    int src0 = (int)(((int)c.X) + ((int)c.Y) * w2) * 4;
+                    int src1 = src0 + 4;
+                    int src2 = src0 + w2 * 4;
+                    int src3 = src0 + 4 + w2 * 4;
+                    if (0 <= src0 && src3 < original.Length)
                     {
-                        projection[dest++] = original[src++];
-                        projection[dest++] = original[src++];
-                        projection[dest++] = original[src++];
-                        projection[dest] = original[src];
+                        float b0 = original[src0++] * (1.0f - dx) + original[src1++] * dx;
+                        float g0 = original[src0++] * (1.0f - dx) + original[src1++] * dx;
+                        float r0 = original[src0++] * (1.0f - dx) + original[src1++] * dx;
+                        float a0 = original[src0  ] * (1.0f - dx) + original[src1  ] * dx;
+                        float b1 = original[src2++] * (1.0f - dx) + original[src3++] * dx;
+                        float g1 = original[src2++] * (1.0f - dx) + original[src3++] * dx;
+                        float r1 = original[src2++] * (1.0f - dx) + original[src3++] * dx;
+                        float a1 = original[src2  ] * (1.0f - dx) + original[src3  ] * dx;
+
+                        projection[dest++] = (byte)(b0 * (1.0f - dy) + b1 * dy);
+                        projection[dest++] = (byte)(g0 * (1.0f - dy) + g1 * dy);
+                        projection[dest++] = (byte)(r0 * (1.0f - dy) + r1 * dy);
+                        projection[dest  ] = (byte)(a0 * (1.0f - dy) + a1 * dy);
                     }
                 }
             });
