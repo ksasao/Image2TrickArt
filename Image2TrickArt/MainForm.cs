@@ -15,6 +15,7 @@ namespace Image2TrickArt
     {
         Bitmap bmp = null;
         Bitmap proj = null;
+        Bitmap nullBmp = new Bitmap(1, 1);
         public MainForm()
         {
             InitializeComponent();
@@ -22,11 +23,7 @@ namespace Image2TrickArt
 
         private void InitializeImage(string filename)
         {
-            // 不要な画像を削除
-            if (bmp != null)
-            {
-                bmp.Dispose();
-            }
+            ClearPictureBoxes();
 
             // 1ピクセル=4バイトのフォーマットに変換
             try
@@ -42,7 +39,7 @@ namespace Image2TrickArt
             var data = ContourTracking.Apply(bmp);
             var poly = Vectorize.Apply(data);
 
-             DebugDraw(data, poly);
+            // DebugDraw(data, poly);
 
             this.pictureBox1.Image = bmp;
 
@@ -55,6 +52,21 @@ namespace Image2TrickArt
                 ErrorDialog();
             }
             GC.Collect();
+        }
+
+        private void ClearPictureBoxes()
+        {
+            // 表示済みの画像を消去
+            if (bmp != null)
+            {
+                this.pictureBox1.Image = nullBmp;
+                bmp.Dispose();
+            }
+            if (proj != null)
+            {
+                this.pictureBox2.Image = nullBmp;
+                proj.Dispose();
+            }
         }
 
         private void ConvertToARGBImage(string filename)
@@ -78,11 +90,6 @@ namespace Image2TrickArt
 
             conv = GetProjection(poly, w, h);
 
-            if (proj != null)
-            {
-                this.pictureBox2.Image = null;
-                proj.Dispose();
-            }
             proj = new Bitmap(w, h);
             byte[] projection = BitmapUtil.BitmapToByteArray(proj);
             byte[] original = BitmapUtil.BitmapToByteArray(bmp);
@@ -172,7 +179,7 @@ namespace Image2TrickArt
             return conv;
         }
 
-        private static void ErrorDialog()
+        private void ErrorDialog()
         {
             MessageBox.Show("解析に失敗しました。\r\n黒い背景の中に白い四角形がある画像ファイルのみ有効です。", "解析失敗", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
