@@ -13,11 +13,11 @@ namespace Mpga.Imaging
     /// </summary>
     public class ProjectionConversion
     {
-        double _a1, _a2, _a3, _a4, _a5, _a6, _a7, _a8;
+        float _a1, _a2, _a3, _a4, _a5, _a6, _a7, _a8;
 
-        public ProjectionConversion(double p, double q,
-            double X1, double Y1, double X2, double Y2,
-            double X3, double Y3, double X4, double Y4)
+        public ProjectionConversion(float p, float q,
+            float X1, float Y1, float X2, float Y2,
+            float X3, float Y3, float X4, float Y4)
         {
             _a1 = -
                 (-X2 * X4 * Y1 + X3 * X4 * Y1 + X1 * X3 * Y2 - X3 * X4 * Y2
@@ -58,8 +58,8 @@ namespace Mpga.Imaging
         /// <returns>射影変換後の座標</returns>
         public PointF Convert(float x, float y)
         {
-            float X = (float) ((_a1 * x + _a2 * y + _a3) / (_a7 * x + _a8 * y + 1));
-            float Y = (float) ((_a4 * x + _a5 * y + _a6) / (_a7 * x + _a8 * y + 1));
+            float X = (_a1 * x + _a2 * y + _a3) / (_a7 * x + _a8 * y + 1);
+            float Y = (_a4 * x + _a5 * y + _a6) / (_a7 * x + _a8 * y + 1);
             return new PointF(X, Y);
         }
     }
