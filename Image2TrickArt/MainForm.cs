@@ -42,7 +42,7 @@ namespace Image2TrickArt
             var data = ContourTracking.Apply(bmp);
             var poly = Vectorize.Apply(data);
 
-            // DebugDraw(data, poly);
+             DebugDraw(data, poly);
 
             this.pictureBox1.Image = bmp;
 

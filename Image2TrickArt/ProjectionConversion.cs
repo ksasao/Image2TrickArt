@@ -7,9 +7,9 @@ using System.Drawing;
 namespace Mpga.Imaging
 {
     /// <summary>
-    /// (0,0)-(0,q)-(p,q)-(p,0) で張られる長方形①と
-    /// 射影変換後の(X1,Y1)-(X2,Y2)-(X3,Y3)-(X4,Y4)の四角形② が既知のとき、
-    /// ①の任意座標を②の対応する座標に変換するクラス
+    /// (0,0)-(0,q)-(p,q)-(p,0) で張られる長方形 A と
+    /// 射影変換後の (X1,Y1)-(X2,Y2)-(X3,Y3)-(X4,Y4) の四角形 A' が既知のとき、
+    /// A の任意座標を A' の対応する座標に変換するクラス
     /// </summary>
     public class ProjectionConversion
     {

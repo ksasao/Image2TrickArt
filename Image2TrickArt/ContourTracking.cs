@@ -70,7 +70,7 @@ namespace Mpga.Imaging
                         // 次の点に移動する
                         p = p + vectorCode[v];
 
-                        // 侵入方向を求める(画像の右への移動を0とした向き)
+                        // 侵入方向を求める(画像の右方向への移動を0とした向き)
                         e = (v + 5) % vectorCode.Length;
 
                         // この点の次に移動する点
@@ -128,13 +128,13 @@ namespace Mpga.Imaging
         private static int GetNextVector(byte[] data, int p, int e, int[] vectorCode)
         {
             int result = -1;
-            for (int i = 0; i < vectorCode.Length - 1; i++)
+            for (int i = 0; i < vectorCode.Length; i++)
             {
-                int vv = (i + e) % vectorCode.Length;
-                int t = p + vectorCode[vv];
+                int v = (i + e) % vectorCode.Length;
+                int t = p + vectorCode[v];
                 if (data[t] > 0)
                 {
-                    result = vv;
+                    result = v;
                     break;
                 }
             }
