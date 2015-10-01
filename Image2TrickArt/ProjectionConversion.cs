@@ -10,6 +10,9 @@ namespace Mpga.Imaging
     /// (0,0)-(0,q)-(p,q)-(p,0) で張られる長方形 A と
     /// 射影変換後の (X1,Y1)-(X2,Y2)-(X3,Y3)-(X4,Y4) の四角形 A' が既知のとき、
     /// A の任意座標を A' の対応する座標に変換するクラス
+    /// ソースコード中の式は射影変換行列(*1)の連立方程式を Mathmatica で
+    /// 展開したもの。
+    /// (*1) 例えば http://yaju3d.hatenablog.jp/entry/2013/08/10/160125
     /// </summary>
     public class ProjectionConversion
     {
